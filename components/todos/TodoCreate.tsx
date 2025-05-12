@@ -4,7 +4,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSQLiteContext } from "expo-sqlite";
 import { useState } from "react";
 import { View } from "react-native";
-import { Button } from "../Button";
 import { Input } from "../Input";
 import { InputDate } from "../InputDate";
 
@@ -41,15 +40,17 @@ export function TodoCreate() {
   };
 
   return (
-    <View style={{ padding: 20 }}>
+    <View
+      style={{ paddingVertical: 10, paddingHorizontal: 20, position: "absolute", bottom: 0, left: 0, right: 0 }}
+    >
+      <InputDate date={dueDate} setDate={setDueDate} />
       <Input
         value={title}
         onChangeText={setTitle}
         placeholder="Titulo"
-        style={{ marginBottom: 20 }}
+        style={{ marginBottom: 10 }}
+        onSubmitEditing={handleCreateTodo}
       />
-      <InputDate date={dueDate} setDate={setDueDate} />
-      <Button text="Crear TODO" onPress={handleCreateTodo} />
     </View>
   );
 }
