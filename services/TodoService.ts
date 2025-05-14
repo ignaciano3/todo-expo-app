@@ -16,6 +16,28 @@ export async function getTodos(db: SQLiteDatabase): Promise<Todo[]> {
   return todos;
 }
 
+export async function getTodosByDate(
+  db: SQLiteDatabase,
+  date: Date
+): Promise<Todo[]> {
+  const startOfDay = new Date(date);
+  startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date(date);
+  endOfDay.setHours(23, 59, 59, 999);
+  const result = await db.getAllAsync<Todo>(
+    "SELECT * FROM todos WHERE dueDate BETWEEN ? AND ?",
+    [startOfDay.toISOString(), endOfDay.toISOString()]
+  );
+  // Convertir las fechas de string a Date
+  const todos = result.map((todo) => ({
+    ...todo,
+    dueDate: new Date(todo.dueDate),
+    createdAt: new Date(todo.createdAt),
+    updatedAt: new Date(todo.updatedAt),
+  }));
+  return todos;
+}
+
 export async function addTodo(
   db: SQLiteDatabase,
   todo: TodoCreate

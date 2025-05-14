@@ -18,7 +18,8 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.todoapp"
+      "package": "com.anonymous.todoapp",
+      "userInterfaceStyle": "light"
     },
     "web": {
       "bundler": "metro",

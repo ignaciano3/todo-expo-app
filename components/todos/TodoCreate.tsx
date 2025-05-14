@@ -5,25 +5,23 @@ import { useSQLiteContext } from "expo-sqlite";
 import { useState } from "react";
 import { View } from "react-native";
 import { Input } from "../Input";
-import { InputDate } from "../InputDate";
 
-export function TodoCreate() {
+export function TodoCreate({ date }: { date: Date }) {
   const db = useSQLiteContext();
   const queryClient = useQueryClient();
   const [title, setTitle] = useState("");
-  const [dueDate, setDueDate] = useState<Date>(new Date());
 
   const createTodo = useMutation({
     mutationFn: async () => {
       if (title.trim() === "") {
         throw new Error("El título no puede estar vacío");
       }
-      if (dueDate < today) {
+      if (date < today) {
         throw new Error("La fecha de vencimiento no puede ser anterior a hoy");
       }
       await addTodo(db, {
         title,
-        dueDate,
+        dueDate: date,
       });
     },
     onSuccess: () => {
@@ -40,10 +38,7 @@ export function TodoCreate() {
   };
 
   return (
-    <View
-      style={{ paddingVertical: 10, paddingHorizontal: 20, position: "absolute", bottom: 0, left: 0, right: 0 }}
-    >
-      <InputDate date={dueDate} setDate={setDueDate} />
+    <View style={{ paddingVertical: 10, paddingHorizontal: 20 }}>
       <Input
         value={title}
         onChangeText={setTitle}
