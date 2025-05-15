@@ -1,9 +1,7 @@
 import { SwipeView } from "@/components/SwipeView";
-import { TodoCreate } from "@/components/todos/TodoCreate";
-import { TodoList } from "@/components/todos/TodoList";
+import TodoPage from "@/components/todos/TodoPage";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, Text } from "react-native";
 
 export default function Index() {
   const router = useRouter();
@@ -31,25 +29,8 @@ export default function Index() {
   return (
     <SafeAreaView edges={["bottom", "left", "right"]} style={{ flex: 1 }}>
       <SwipeView onSwipeLeft={onSwipeLeft} onSwipeRight={onSwipeRight}>
-        <Text style={styles.dateTitle}>
-          {Intl.DateTimeFormat("es-AR", {
-            year: "numeric",
-            month: "long",
-            day: "2-digit",
-          }).format(date)}
-        </Text>
-        <TodoList date={date} />
-        <TodoCreate date={date} />
+        <TodoPage date={date} />
       </SwipeView>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  dateTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 10,
-  },
-});

@@ -1,4 +1,4 @@
-import { today } from "@/lib/utils";
+import { today, todosQueryKey } from "@/lib/utils";
 import { addTodo } from "@/services/TodoService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSQLiteContext } from "expo-sqlite";
@@ -26,7 +26,7 @@ export function TodoCreate({ date }: { date: Date }) {
     },
     onSuccess: () => {
       setTitle("");
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
+      queryClient.invalidateQueries({ queryKey: todosQueryKey(date) });
     },
     onError: (error) => {
       console.error("Error al crear la tarea:", error);

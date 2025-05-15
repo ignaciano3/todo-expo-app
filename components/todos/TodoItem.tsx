@@ -1,3 +1,4 @@
+import { todosQueryKey } from "@/lib/utils";
 import type { Todo } from "@/models/Todo";
 import { deleteTodo, toggleCompleteTodo } from "@/services/TodoService";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,7 +18,9 @@ const TodoOptions = ({
     mutationFn: (todoId: number) => deleteTodo.bind(null, dbContext)(todoId),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
+      queryClient.invalidateQueries({
+        queryKey: todosQueryKey(todo.dueDate),
+      });
     },
   });
   const toggleComplete = useMutation({
@@ -25,7 +28,9 @@ const TodoOptions = ({
       toggleCompleteTodo.bind(null, dbContext)(data.id, data.completed),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
+      queryClient.invalidateQueries({
+        queryKey: todosQueryKey(todo.dueDate),
+      });
     },
   });
 
