@@ -26,7 +26,6 @@ export function TodoList({ date }: { date: Date }) {
     );
   }
 
-  console.log("Todos", todos);
   return (
     <View style={{ paddingHorizontal: 4, marginVertical: 20 }}>
       <FlatList
