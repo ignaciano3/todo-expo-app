@@ -1,4 +1,3 @@
-import { Redirect } from "expo-router";
 import { Dimensions, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
@@ -24,14 +23,8 @@ export function SwipeView({
     <GestureHandlerRootView>
       <Swipeable
         onSwipeableWillOpen={onSwipe}
-        renderLeftActions={() => (
-          <View style={{ width: Dimensions.get("screen").width / 4 }} />
-        )}
-        renderRightActions={() => (
-          <View
-            style={{ width: Dimensions.get("screen").width / 4 }}
-          ></View>
-        )}
+        renderLeftActions={() => <ActionPlaceHolder />}
+        renderRightActions={() => <ActionPlaceHolder />}
         containerStyle={{ flex: 1 }}
       >
         {children}
@@ -40,12 +33,13 @@ export function SwipeView({
   );
 }
 
-const LeftRedirect = () => {
+const ActionPlaceHolder = () => {
   return (
-    <Redirect
-      href={{
-        pathname: "/",
-        params: { dateIso: new Date().toISOString() },
+    <View
+      style={{
+        width: Dimensions.get("screen").width / 4,
+        height: "100%",
+        backgroundColor: "#c0c0c0",
       }}
     />
   );
