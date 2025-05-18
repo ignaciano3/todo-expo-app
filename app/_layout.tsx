@@ -1,6 +1,7 @@
+import { ErrorPage } from "@/components/ErrorPage";
 import { migrateDbIfNeeded } from "@/services/DBService";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Stack } from "expo-router";
+import { Stack, type ErrorBoundaryProps } from "expo-router";
 import { SQLiteProvider } from "expo-sqlite";
 import { StatusBar } from "expo-status-bar";
 import { Suspense } from "react";
@@ -8,6 +9,10 @@ import { Text } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const queryClient = new QueryClient();
+
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
+  return <ErrorPage error={error} retry={retry} />;
+}
 
 export default function RootLayout() {
   return (
